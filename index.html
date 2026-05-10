@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>刘家瑞的个人简介</title>
+<style>
+    body {
+        margin: 0;
+        font-family: "Microsoft YaHei", sans-serif;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        color: #fff;
+        line-height: 1.6;
+    }
+
+    header {
+        text-align: center;
+        padding: 50px 20px 30px;
+        background: rgba(0,0,0,0.3);
+    }
+    header h1 {
+        font-size: 3em;
+        margin: 0;
+    }
+    header p {
+        font-size: 1.2em;
+        margin-top: 10px;
+        color: #d0e6ff;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .card h2 {
+        border-bottom: 2px solid #00ffff;
+        padding-bottom: 5px;
+        color: #00ffff;
+    }
+
+    .skill {
+        margin: 10px 0;
+    }
+    .skill-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .skill-bar {
+        background: rgba(255,255,255,0.2);
+        border-radius: 10px;
+        overflow: hidden;
+        height: 15px;
+    }
+    .skill-bar span {
+        display: block;
+        height: 100%;
+        background: #00ffff;
+        width: 0%;
+        border-radius: 10px;
+        animation: fillSkill 2s forwards;
+    }
+    @keyframes fillSkill {
+        to { width: var(--skill-width); }
+    }
+
+    .contact a {
+        display: inline-block;
+        margin-right: 15px;
+        color: #00ffff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .contact a:hover {
+        text-decoration: underline;
+    }
+
+    @media(max-width: 500px){
+        header h1 {
+            font-size: 2em;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>刘家瑞</h1>
+    <p>电气工程及其自动化 | RoboCon排球赛电控组 | 嵌入式开发 & 强化学习</p>
+</header>
+
+<div class="container">
+    <!-- 教育背景 -->
+    <div class="card">
+        <h2>教育背景</h2>
+        <p>河北科技大学，电气工程及其自动化，本科 2025级</p>
+    </div>
+
+    <!-- 技能 -->
+    <div class="card">
+        <h2>技能</h2>
+        <div class="skill">
+            <div class="skill-name">C / C++</div>
+            <div class="skill-bar"><span style="--skill-width:90%"></span></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">Python / 机器学习基础</div>
+            <div class="skill-bar"><span style="--skill-width:75%"></span></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">ROS2 & 强化学习</div>
+            <div class="skill-bar"><span style="--skill-width:65%"></span></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">STM32 / ESP32 / TI 微控制器</div>
+            <div class="skill-bar"><span style="--skill-width:85%"></span></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">电机控制与电调</div>
+            <div class="skill-bar"><span style="--skill-width:80%"></span></div>
+        </div>
+        <div class="skill">
+            <div class="skill-name">嵌入式外设 & 状态机开发</div>
+            <div class="skill-bar"><span style="--skill-width:85%"></span></div>
+        </div>
+    </div>
+
+    <!-- 项目经历 -->
+    <div class="card">
+        <h2>项目经历</h2>
+        <ul>
+            <li>RoboCon排球赛电控组核心成员，两年参与国二获奖</li>
+            <li>六轴机械臂与四组机器人强化学习工程，实现完整跑通</li>
+            <li>自主三轮全向轮机器人开发，完成运动学逆解与控制算法</li>
+            <li>ESP32远程控制器开发，使用LVGL + FreeRTOS实现任务调度和界面</li>
+        </ul>
+    </div>
+
+    <!-- 联系方式 -->
+    <div class="card">
+        <h2>联系方式</h2>
+        <p class="contact">
+            <a href="mailto:your.email@example.com">邮箱</a>
+            <a href="https://github.com/LjiaruiAT" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
