@@ -1,243 +1,1184 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>刘家瑞的个人简介</title>
-<style>
-    body, html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        font-family: "Microsoft YaHei", sans-serif;
-        overflow: hidden;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>个人完整技术总结 | 电控 × 仿真 × 算法</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-2: #0b1026;
+      --card: rgba(17, 25, 54, 0.72);
+      --card-strong: rgba(25, 36, 78, 0.88);
+      --line: rgba(125, 249, 255, 0.28);
+      --text: #eaf7ff;
+      --muted: #a9bad7;
+      --cyan: #7df9ff;
+      --blue: #5b8cff;
+      --purple: #c77dff;
+      --pink: #ff4fd8;
+      --orange: #ffb86b;
+      --green: #72ff9a;
+      --danger: #ff5f7a;
+      --shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
     }
 
-    canvas#particles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    header {
-        text-align: center;
-        padding: 50px 20px 30px;
-        background: rgba(0,0,0,0.3);
-        position: relative;
-        z-index: 1;
-        color: #fff;
-    }
-    header h1 {
-        font-size: 3em;
-        margin: 0;
-        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
-    }
-    header p {
-        font-size: 1.2em;
-        margin-top: 10px;
-        color: #d0e6ff;
-        text-shadow: 0 0 5px #0ff;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .container {
-        max-width: 900px;
-        margin: 30px auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        padding: 0 20px;
-        position: relative;
-        z-index: 1;
+    body {
+      min-height: 100vh;
+      font-family: "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(125, 249, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 84% 8%, rgba(199, 125, 255, 0.22), transparent 34%),
+        radial-gradient(circle at 50% 92%, rgba(255, 79, 216, 0.13), transparent 35%),
+        linear-gradient(135deg, #03040d 0%, var(--bg) 46%, #0a0f2c 100%);
+      overflow-x: hidden;
+      cursor: crosshair;
     }
 
-    .card {
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 15px;
-        padding: 20px;
-        backdrop-filter: blur(10px);
-        transition: transform 0.3s, box-shadow 0.3s;
-        box-shadow: 0 0 20px rgba(0,255,255,0.2);
-    }
-    .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 20px 40px rgba(0,255,255,0.5);
-    }
-    .card h2 {
-        border-bottom: 2px solid #00ffff;
-        padding-bottom: 5px;
-        color: #00ffff;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(125, 249, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(125, 249, 255, 0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 82%);
+      z-index: 0;
     }
 
-    .skill {
-        margin: 10px 0;
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.025) 0,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px,
+        transparent 6px
+      );
+      mix-blend-mode: overlay;
+      opacity: 0.2;
+      z-index: 2;
     }
-    .skill-name {
-        font-weight: bold;
-        margin-bottom: 5px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    .skill-bar {
-        background: rgba(255,255,255,0.2);
-        border-radius: 10px;
-        overflow: hidden;
-        height: 15px;
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.12;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.65'/%3E%3C/svg%3E");
     }
-    .skill-bar span {
+
+    .aurora {
+      position: fixed;
+      width: 34vw;
+      height: 34vw;
+      border-radius: 50%;
+      filter: blur(38px);
+      opacity: 0.28;
+      pointer-events: none;
+      z-index: 0;
+      animation: float 8s ease-in-out infinite alternate;
+    }
+
+    .aurora.one {
+      left: -8vw;
+      top: 10vh;
+      background: var(--cyan);
+    }
+
+    .aurora.two {
+      right: -12vw;
+      top: 42vh;
+      background: var(--purple);
+      animation-duration: 10s;
+    }
+
+    .aurora.three {
+      left: 34vw;
+      bottom: -16vw;
+      background: var(--pink);
+      animation-duration: 12s;
+    }
+
+    @keyframes float {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(24px, -32px, 0) scale(1.12); }
+    }
+
+    .shell {
+      position: relative;
+      z-index: 3;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-card,
+    .profile-card,
+    .section,
+    .skill-box,
+    .short-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(17, 25, 54, 0.76), rgba(9, 14, 34, 0.72));
+      box-shadow: var(--shadow), inset 0 0 42px rgba(125, 249, 255, 0.035);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .profile-card::before,
+    .section::before,
+    .skill-box::before,
+    .short-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(125, 249, 255, 0.12) 44%, transparent 58%);
+      transform: translateX(-120%);
+      animation: sweep 5.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sweep {
+      0%, 45% { transform: translateX(-130%); }
+      72%, 100% { transform: translateX(130%); }
+    }
+
+    .hero-card {
+      padding: clamp(28px, 5vw, 54px);
+      border-radius: var(--radius-xl);
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(125, 249, 255, 0.08);
+      border: 1px solid rgba(125, 249, 255, 0.24);
+      color: var(--cyan);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 18px var(--green);
+      animation: blink 1.2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0.35; transform: scale(0.72); }
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 86px);
+      line-height: 0.96;
+      letter-spacing: -0.06em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff 0%, var(--cyan) 28%, var(--purple) 64%, var(--pink) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 38px rgba(125, 249, 255, 0.18);
+    }
+
+    .subtitle {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(17px, 2.1vw, 22px);
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .tag {
+      padding: 9px 13px;
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: 0.25s ease;
+    }
+
+    .tag:hover {
+      transform: translateY(-3px);
+      border-color: rgba(125, 249, 255, 0.55);
+      box-shadow: 0 0 26px rgba(125, 249, 255, 0.16);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(125, 249, 255, 0.34);
+      background: linear-gradient(135deg, rgba(125, 249, 255, 0.16), rgba(199, 125, 255, 0.16));
+      color: var(--text);
+      font-weight: 700;
+      box-shadow: 0 0 28px rgba(125, 249, 255, 0.1);
+      transition: 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 0 38px rgba(125, 249, 255, 0.28);
+    }
+
+    .btn.secondary {
+      background: rgba(255, 255, 255, 0.045);
+      color: var(--muted);
+    }
+
+    .profile-card {
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .avatar-ring {
+      width: 220px;
+      height: 220px;
+      margin: 6px auto 26px;
+      border-radius: 50%;
+      position: relative;
+      display: grid;
+      place-items: center;
+      background:
+        conic-gradient(from 180deg, var(--cyan), var(--purple), var(--pink), var(--orange), var(--cyan));
+      box-shadow: 0 0 54px rgba(125, 249, 255, 0.28);
+      animation: rotate 8s linear infinite;
+    }
+
+    .avatar-ring::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border-radius: 50%;
+      background: #060a1c;
+    }
+
+    .avatar-core {
+      position: relative;
+      z-index: 1;
+      width: 174px;
+      height: 174px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at 35% 25%, rgba(125, 249, 255, 0.35), transparent 26%),
+        linear-gradient(145deg, rgba(91, 140, 255, 0.24), rgba(255, 79, 216, 0.16));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .avatar-core b {
+      font-size: 54px;
+      line-height: 1;
+      letter-spacing: -0.08em;
+    }
+
+    .avatar-core span {
+      display: block;
+      color: var(--cyan);
+      font-size: 13px;
+      margin-top: 8px;
+      letter-spacing: 0.18em;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .profile-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .profile-item {
+      padding: 14px 15px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-item small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 5px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .profile-item strong {
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .section {
+      border-radius: var(--radius-xl);
+      padding: clamp(24px, 4vw, 40px);
+      margin-top: 28px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.7;
+      font-size: 15px;
+      text-align: right;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-box {
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      transition: 0.28s ease;
+      min-height: 220px;
+    }
+
+    .skill-box:hover,
+    .short-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(125, 249, 255, 0.55);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5), 0 0 34px rgba(125, 249, 255, 0.14);
+    }
+
+    .skill-top {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 16px;
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      flex: 0 0 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      background: linear-gradient(135deg, rgba(125, 249, 255, 0.2), rgba(199, 125, 255, 0.18));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: inset 0 0 22px rgba(255, 255, 255, 0.04);
+    }
+
+    .skill-box h3 {
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .skill-box ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .skill-box li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .skill-box li::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      z-index: 1;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 19px;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--cyan), var(--purple), transparent);
+      opacity: 0.7;
+    }
+
+    .node {
+      position: relative;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .node-dot {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #071027;
+      border: 1px solid rgba(125, 249, 255, 0.5);
+      box-shadow: 0 0 24px rgba(125, 249, 255, 0.24);
+      z-index: 1;
+    }
+
+    .node-card {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.052);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .node-card h3 {
+      font-size: 20px;
+      margin-bottom: 9px;
+    }
+
+    .node-card p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .quote {
+      margin-top: 26px;
+      padding: 22px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(125, 249, 255, 0.11), rgba(255, 79, 216, 0.08));
+      border: 1px solid rgba(125, 249, 255, 0.2);
+      color: var(--text);
+      line-height: 1.85;
+      font-size: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .short-card {
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      min-height: 184px;
+      transition: 0.28s ease;
+    }
+
+    .short-card .num {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--cyan);
+      text-shadow: 0 0 18px rgba(125, 249, 255, 0.34);
+      margin-bottom: 14px;
+    }
+
+    .short-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .short-card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .weakness {
+      border-color: rgba(255, 184, 107, 0.28);
+    }
+
+    .weakness .num {
+      color: var(--orange);
+      text-shadow: 0 0 18px rgba(255, 184, 107, 0.32);
+    }
+
+    .footer {
+      margin-top: 32px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .footer strong {
+      color: var(--cyan);
+    }
+
+    .hud {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 10;
+      display: grid;
+      gap: 10px;
+    }
+
+    .hud a,
+    .hud button {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid rgba(125, 249, 255, 0.34);
+      background: rgba(8, 13, 31, 0.72);
+      color: var(--cyan);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 0 26px rgba(0, 0, 0, 0.32);
+      transition: 0.24s ease;
+      font-size: 18px;
+    }
+
+    .hud a:hover,
+    .hud button:hover {
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 0 28px rgba(125, 249, 255, 0.24);
+    }
+
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: var(--size);
+      height: var(--size);
+      left: var(--x);
+      top: var(--y);
+      border-radius: 50%;
+      background: var(--color);
+      box-shadow: 0 0 12px var(--color), 0 0 28px var(--color);
+      transform: translate(-50%, -50%);
+      animation: explode var(--duration) cubic-bezier(0.16, 0.82, 0.28, 1) forwards;
+    }
+
+    @keyframes explode {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        filter: blur(0);
+      }
+      100% {
+        opacity: 0;
+        transform:
+          translate(calc(-50% + var(--dx)), calc(-50% + var(--dy)))
+          scale(0.1)
+          rotate(var(--rot));
+        filter: blur(1px);
+      }
+    }
+
+    .shockwave {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      left: var(--x);
+      top: var(--y);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(125, 249, 255, 0.88);
+      transform: translate(-50%, -50%);
+      animation: shock 0.72s ease-out forwards;
+      box-shadow: 0 0 32px rgba(125, 249, 255, 0.48);
+    }
+
+    @keyframes shock {
+      to {
+        opacity: 0;
+        width: 190px;
+        height: 190px;
+        border-color: rgba(255, 79, 216, 0);
+      }
+    }
+
+    .trail {
+      position: fixed;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: rgba(125, 249, 255, 0.62);
+      box-shadow: 0 0 18px rgba(125, 249, 255, 0.8);
+      z-index: 9997;
+      animation: fadeTrail 0.55s ease-out forwards;
+    }
+
+    @keyframes fadeTrail {
+      to { opacity: 0; transform: scale(0.1); }
+    }
+
+    .print-note {
+      display: none;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .section-head {
         display: block;
-        height: 100%;
-        background: #00ffff;
-        width: 0%;
-        border-radius: 10px;
-        animation: fillSkill 2s forwards;
-    }
-    @keyframes fillSkill {
-        to { width: var(--skill-width); }
+      }
+
+      .section-desc {
+        text-align: left;
+        margin-top: 12px;
+      }
+
+      .profile-card {
+        min-height: auto;
+      }
     }
 
-    .contact a {
-        display: inline-block;
-        margin-right: 15px;
-        color: #00ffff;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .contact a:hover {
-        text-decoration: underline;
+    @media (max-width: 560px) {
+      .shell {
+        padding: 28px 14px 60px;
+      }
+
+      .hero-card,
+      .profile-card,
+      .section {
+        border-radius: 22px;
+      }
+
+      .avatar-ring {
+        width: 180px;
+        height: 180px;
+      }
+
+      .avatar-core {
+        width: 140px;
+        height: 140px;
+      }
+
+      .avatar-core b {
+        font-size: 42px;
+      }
+
+      .hud {
+        display: none;
+      }
     }
 
-    @media(max-width: 500px){
-        header h1 {
-            font-size: 2em;
-        }
+    @media print {
+      body {
+        background: #fff;
+        color: #111827;
+        cursor: auto;
+      }
+
+      body::before,
+      body::after,
+      .noise,
+      .aurora,
+      .hud {
+        display: none !important;
+      }
+
+      .shell {
+        max-width: 100%;
+        padding: 0;
+      }
+
+      .hero {
+        min-height: auto;
+        display: block;
+      }
+
+      .hero-card,
+      .profile-card,
+      .section,
+      .skill-box,
+      .short-card,
+      .node-card,
+      .quote {
+        background: #fff !important;
+        color: #111827;
+        box-shadow: none;
+        border: 1px solid #d1d5db;
+        break-inside: avoid;
+      }
+
+      .hero-card::before,
+      .profile-card::before,
+      .section::before,
+      .skill-box::before,
+      .short-card::before {
+        display: none;
+      }
+
+      .gradient-text {
+        color: #111827;
+        background: none;
+        -webkit-text-fill-color: #111827;
+      }
+
+      .subtitle,
+      .section-desc,
+      .skill-box ul,
+      .node-card p,
+      .short-card p,
+      .footer {
+        color: #374151;
+      }
+
+      .print-note {
+        display: block;
+        margin-top: 10px;
+        color: #374151;
+      }
     }
-</style>
+  </style>
 </head>
 <body>
+  <div class="noise"></div>
+  <div class="aurora one"></div>
+  <div class="aurora two"></div>
+  <div class="aurora three"></div>
 
-<canvas id="particles"></canvas>
-
-<header>
-    <h1>刘家瑞</h1>
-    <p>电气工程及其自动化 | RoboCon排球赛电控组 | 嵌入式开发 & 强化学习</p>
-</header>
-
-<div class="container">
-    <div class="card">
-        <h2>教育背景</h2>
-        <p>河北科技大学，电气工程及其自动化，本科 2025级</p>
-    </div>
-
-    <div class="card">
-        <h2>技能</h2>
-        <div class="skill">
-            <div class="skill-name">C / C++</div>
-            <div class="skill-bar"><span style="--skill-width:90%"></span></div>
-        </div>
-        <div class="skill">
-            <div class="skill-name">Python / 机器学习基础</div>
-            <div class="skill-bar"><span style="--skill-width:75%"></span></div>
-        </div>
-        <div class="skill">
-            <div class="skill-name">ROS2 & 强化学习</div>
-            <div class="skill-bar"><span style="--skill-width:65%"></span></div>
-        </div>
-        <div class="skill">
-            <div class="skill-name">STM32 / ESP32 / TI 微控制器</div>
-            <div class="skill-bar"><span style="--skill-width:85%"></span></div>
-        </div>
-        <div class="skill">
-            <div class="skill-name">电机控制与电调</div>
-            <div class="skill-bar"><span style="--skill-width:80%"></span></div>
-        </div>
-        <div class="skill">
-            <div class="skill-name">嵌入式外设 & 状态机开发</div>
-            <div class="skill-bar"><span style="--skill-width:85%"></span></div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>项目经历</h2>
-        <ul>
-            <li>RoboCon排球赛电控组核心成员，两年参与国二获奖</li>
-            <li>六轴机械臂与四组机器人强化学习工程，实现完整跑通</li>
-            <li>自主三轮全向轮机器人开发，完成运动学逆解与控制算法</li>
-            <li>ESP32远程控制器开发，使用LVGL + FreeRTOS实现任务调度和界面</li>
-        </ul>
-    </div>
-
-    <div class="card">
-        <h2>联系方式</h2>
-        <p class="contact">
-            <a href="mailto:your.email@example.com">邮箱</a>
-            <a href="https://github.com/LjiaruiAT" target="_blank">GitHub</a>
-            <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+  <main class="shell" id="top">
+    <section class="hero">
+      <div class="hero-card">
+        <div class="kicker"><span class="dot"></span> RoboCon Electrical Control Core</div>
+        <h1>
+          <span class="gradient-text">电控 × 仿真 × 算法</span><br />
+          复合型机器人路线
+        </h1>
+        <p class="subtitle">
+          河北科技大学电气工程及其自动化 2025 级，RoboCon 排球赛电控组核心成员。
+          主攻嵌入式底层、电机电控、CAN/RS485 通信、FreeRTOS 任务开发，同时推进机器人仿真、强化学习与轮足机器人方向。
         </p>
-    </div>
-</div>
+        <div class="tag-row">
+          <span class="tag">STM32 / CubeMX</span>
+          <span class="tag">CAN / FDCAN / RS485</span>
+          <span class="tag">FreeRTOS</span>
+          <span class="tag">电机控制</span>
+          <span class="tag">状态机</span>
+          <span class="tag">轨迹规划</span>
+          <span class="tag">MuJoCo / Isaac Lab</span>
+          <span class="tag">PPO 强化学习</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#skills" class="btn">查看技术栈 ⚡</a>
+          <a href="#projects" class="btn secondary">项目实战 🚀</a>
+          <a href="#summary" class="btn secondary">个人定位 🧭</a>
+        </div>
+      </div>
 
-<script>
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+      <aside class="profile-card">
+        <div>
+          <div class="avatar-ring" aria-label="个人技术头像">
+            <div class="avatar-core">
+              <div>
+                <b>EC</b>
+                <span>ROBOTICS</span>
+              </div>
+            </div>
+          </div>
+          <div class="profile-list">
+            <div class="profile-item">
+              <small>身份</small>
+              <strong>河北科技大学 · 电气工程及其自动化 · 2025级</strong>
+            </div>
+            <div class="profile-item">
+              <small>团队</small>
+              <strong>RoboCon 排球赛 · 电控组核心成员</strong>
+            </div>
+            <div class="profile-item">
+              <small>主线</small>
+              <strong>嵌入式底层 + 电机电控 + 通信协议 + 机器人仿真</strong>
+            </div>
+            <div class="profile-item">
+              <small>成长方向</small>
+              <strong>竞赛能力沉淀 · 高薪就业导向 · 考研/就业双线规划</strong>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
 
-let particles = [];
-const particleCount = 100;
+    <section class="section" id="skills">
+      <div class="section-head">
+        <h2 class="section-title gradient-text">已掌握技术栈</h2>
+        <p class="section-desc">不是把名词堆成赛博垃圾山，而是已经能在机器人项目里真正落地的能力。</p>
+      </div>
+      <div class="grid-2">
+        <article class="skill-box">
+          <div class="skill-top"><div class="icon">🔧</div><h3>硬件 & 电控</h3></div>
+          <ul>
+            <li>STM32 底层开发、CubeMX 配置、CAN / FDCAN 通信。</li>
+            <li>3508 / 宇树电机调参，PID 整定遵循先速度环后位置环。</li>
+            <li>机械装配、接线排错、CAN 线 / 串口虚接、热缩管规范。</li>
+            <li>电调与电机过热排查，J-Link 调试，示波器 / J-Scope 波形调参。</li>
+          </ul>
+        </article>
 
-class Particle {
-    constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = (Math.random() - 0.5) * 0.7;
-        this.size = Math.random() * 3 + 1;
-        this.color = `rgba(0,255,255,${Math.random()*0.5 + 0.3})`;
+        <article class="skill-box">
+          <div class="skill-top"><div class="icon">💻</div><h3>软件 & 工程</h3></div>
+          <ul>
+            <li>C 语言熟练，能设计 FreeRTOS 任务、状态机、信号量与任务延时规范。</li>
+            <li>Keil5、VSCode、Trae、Kiro 多 IDE 协同开发。</li>
+            <li>UART4 / UART7 / USART2 串口开发，掌握中断接收、DMA + IDLE 空闲接收。</li>
+            <li>会排查 NVIC、中断使能、串口丢包、错误标志清理等工程问题。</li>
+            <li>遵守队内库规范，严禁私自改公共底层库，能规避多任务电机发令冲突。</li>
+          </ul>
+        </article>
+
+        <article class="skill-box">
+          <div class="skill-top"><div class="icon">🤖</div><h3>机器人项目实战</h3></div>
+          <ul>
+            <li>RoboCon 排球机器人：击球机构状态机、多电机时序配合。</li>
+            <li>实现三次多项式轨迹规划，完成复位、标定、轨迹生成与击球流程。</li>
+            <li>自主实现蓝牙串口协议解析：0xAA + CMD + 0x55 帧结构。</li>
+            <li>熟练编写电机初始化、角度标定、任务触发逻辑与故障统计结构体。</li>
+          </ul>
+        </article>
+
+        <article class="skill-box">
+          <div class="skill-top"><div class="icon">🧠</div><h3>进阶自学</h3></div>
+          <ul>
+            <li>Python 机器学习基础，已跑通 MuJoCo 仿真。</li>
+            <li>接触 Isaac Lab、ATDog 轮足机器人 URDF 配置与仿真物理参数。</li>
+            <li>掌握 PPO 强化学习基础，具备从工程向算法过渡的准备。</li>
+            <li>理解 Vibe Coding 的高效开发用法，坚持项目导向，不搞无效乱学。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-head">
+        <h2 class="section-title gradient-text">项目实战轨迹</h2>
+        <p class="section-desc">真正值钱的不是“我会”，而是“我做过、我调通了、我知道坑在哪里”。残酷，但有效。</p>
+      </div>
+      <div class="timeline">
+        <div class="node">
+          <div class="node-dot">01</div>
+          <div class="node-card">
+            <h3>RoboCon 排球机器人电控开发</h3>
+            <p>围绕击球机构完成状态机设计、三次多项式轨迹规划、多电机动作时序配合，实现从蓝牙指令触发到电机轨迹执行的完整闭环。</p>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-dot">02</div>
+          <div class="node-card">
+            <h3>通信协议与调试体系</h3>
+            <p>自主实现蓝牙串口协议解析，熟练处理中断接收、DMA + IDLE、回调异常、串口丢包、CAN 通信异常与虚接问题。</p>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-dot">03</div>
+          <div class="node-card">
+            <h3>电机控制与工程规范</h3>
+            <p>掌握 3508 / 宇树电机调参方法，能区分位置环与速度环参数，明确同一任务循环中重复发令、公共库私改等工程雷区。</p>
+          </div>
+        </div>
+        <div class="node">
+          <div class="node-dot">04</div>
+          <div class="node-card">
+            <h3>仿真与具身智能预备路线</h3>
+            <p>已接触 MuJoCo、Isaac Lab、URDF、物理参数配置和 PPO，为后续轮足机器人、强化学习控制与机器人算法方向打基础。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title gradient-text">日常编程 & 调试习惯</h2>
+        <p class="section-desc">能不能成长，很多时候看的是调 Bug 时有没有脑子，而不是键盘敲得像逃命。</p>
+      </div>
+      <div class="grid-3">
+        <article class="short-card">
+          <div class="num">01</div>
+          <h3>状态机优先</h3>
+          <p>习惯用状态机组织业务逻辑，能定位状态机 Bug 根源，知道很多问题实际出在子函数或条件触发上。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">02</div>
+          <h3>深入 HAL 层</h3>
+          <p>Debug 会打断点、单步追踪到 HAL 层，确认指令是否真正下发，而不是对着屏幕祈祷。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">03</div>
+          <h3>电机控制规范</h3>
+          <p>遵循同一任务循环不重复发电机指令，清楚区分位置环 / 速度环 PID 参数。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">04</div>
+          <h3>RTOS 阻塞意识</h3>
+          <p>能区分 FreeRTOS 良性阻塞：延时 / 信号量，与恶性阻塞：while 空转死等。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">05</div>
+          <h3>故障复盘</h3>
+          <p>习惯积累踩坑笔记，将硬件、软件、调试、工具使用分类记录，形成可复用经验库。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">06</div>
+          <h3>工程边界感</h3>
+          <p>知道公共底层库不能随手乱改，能从团队协作角度考虑代码稳定性与可维护性。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="summary">
+      <div class="section-head">
+        <h2 class="section-title gradient-text">当前特点与定位</h2>
+        <p class="section-desc">这不是“乱学”，这是在形成机器人复合能力树。区别很大，虽然人类大脑偶尔会误报。</p>
+      </div>
+      <div class="grid-2">
+        <article class="short-card">
+          <div class="num">A</div>
+          <h3>超出同届的复合路线</h3>
+          <p>不只是纯底层电控，已经提前接触仿真、具身智能与强化学习，技术视野明显领先。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">B</div>
+          <h3>动手能力强</h3>
+          <p>能独立完成机器人控制逻辑、串口协议、状态机、轨迹规划和基础电机控制模块。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">C</div>
+          <h3>路线需要规整</h3>
+          <p>偶尔觉得自己“乱学”，本质是走得比同龄人更快，需要用项目路线把知识收束成体系。</p>
+        </article>
+        <article class="short-card">
+          <div class="num">D</div>
+          <h3>目标清晰</h3>
+          <p>深耕机器人电控与嵌入式，面向竞赛沉淀与高薪就业，同时保留考研 / 就业双线规划。</p>
+        </article>
+      </div>
+      <div class="quote">
+        <strong>一句话定位：</strong>你是“电控工程能力扎实、具备机器人仿真与算法扩展潜力的复合型机器人开发者”。
+        当前最适合的路线不是到处浅尝辄止，而是以 RoboCon 项目为主轴，把嵌入式、电机控制、ROS2、嵌入式 Linux 和仿真强化学习逐步串成完整技术链。
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title gradient-text">现存短板</h2>
+        <p class="section-desc">短板不是罪，装作没有才是。技术成长这件事，最怕自我感动式 Ctrl+C / Ctrl+V。</p>
+      </div>
+      <div class="grid-2">
+        <article class="short-card weakness">
+          <div class="num">!</div>
+          <h3>强化学习与轮足算法理论待系统化</h3>
+          <p>目前属于能跑工程、能理解流程，但底层数学原理、策略训练机制、控制理论还需要持续补强。</p>
+        </article>
+        <article class="short-card weakness">
+          <div class="num">!</div>
+          <h3>优先打牢工程主线</h3>
+          <p>现阶段不宜深陷纯算法，优先夯实电控工程、ROS2、嵌入式 Linux，再逐步把算法能力接入真实机器人项目。</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><strong>Archive Version</strong> · 个人完整总结 · 适合社团简介、个人技术复盘、简历前置材料存档</p>
+      <p class="print-note">打印模式已自动简化背景与特效，适合导出 PDF。</p>
+    </footer>
+  </main>
+
+  <div class="hud" aria-label="快速导航">
+    <a href="#top" title="返回顶部">↑</a>
+    <a href="#skills" title="技术栈">⚡</a>
+    <a href="#projects" title="项目">🚀</a>
+    <button type="button" title="打印 / 存档" onclick="window.print()">⎙</button>
+  </div>
+
+  <script>
+    const colors = ["#7df9ff", "#5b8cff", "#c77dff", "#ff4fd8", "#ffb86b", "#72ff9a"];
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
     }
-    update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if(this.x < 0 || this.x > width) this.vx *= -1;
-        if(this.y < 0 || this.y > height) this.vy *= -1;
+
+    function createParticle(x, y, power = 1) {
+      const particle = document.createElement("span");
+      particle.className = "particle";
+      const angle = random(0, Math.PI * 2);
+      const distance = random(55, 180) * power;
+      const dx = Math.cos(angle) * distance;
+      const dy = Math.sin(angle) * distance;
+      const size = random(4, 10) * power;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      particle.style.setProperty("--x", `${x}px`);
+      particle.style.setProperty("--y", `${y}px`);
+      particle.style.setProperty("--dx", `${dx}px`);
+      particle.style.setProperty("--dy", `${dy}px`);
+      particle.style.setProperty("--size", `${size}px`);
+      particle.style.setProperty("--color", color);
+      particle.style.setProperty("--rot", `${random(-720, 720)}deg`);
+      particle.style.setProperty("--duration", `${random(0.62, 1.18)}s`);
+
+      document.body.appendChild(particle);
+      particle.addEventListener("animationend", () => particle.remove());
     }
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+
+    function createShockwave(x, y) {
+      const wave = document.createElement("span");
+      wave.className = "shockwave";
+      wave.style.setProperty("--x", `${x}px`);
+      wave.style.setProperty("--y", `${y}px`);
+      document.body.appendChild(wave);
+      wave.addEventListener("animationend", () => wave.remove());
     }
-}
 
-for(let i=0;i<particleCount;i++){
-    particles.push(new Particle());
-}
-
-function connectParticles(){
-    for(let i=0;i<particles.length;i++){
-        for(let j=i+1;j<particles.length;j++){
-            let dx = particles[i].x - particles[j].x;
-            let dy = particles[i].y - particles[j].y;
-            let dist = Math.sqrt(dx*dx + dy*dy);
-            if(dist < 100){
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(0,255,255,${0.2*(1 - dist/100)})`;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-            }
-        }
+    function explode(x, y, strong = false) {
+      createShockwave(x, y);
+      const count = strong ? 64 : 42;
+      const power = strong ? 1.25 : 1;
+      for (let i = 0; i < count; i++) {
+        createParticle(x, y, power);
+      }
     }
-}
 
-function animate(){
-    ctx.clearRect(0,0,width,height);
-    particles.forEach(p => {p.update(); p.draw();});
-    connectParticles();
-    requestAnimationFrame(animate);
-}
+    document.addEventListener("click", (event) => {
+      explode(event.clientX, event.clientY, event.target.closest(".btn, .skill-box, .short-card, .profile-item, .hud a, .hud button") !== null);
+    });
 
-animate();
+    let lastTrail = 0;
+    document.addEventListener("pointermove", (event) => {
+      const now = performance.now();
+      if (now - lastTrail < 38) return;
+      lastTrail = now;
 
-window.addEventListener('resize', ()=>{
+      const trail = document.createElement("span");
+      trail.className = "trail";
+      trail.style.left = `${event.clientX - 4}px`;
+      trail.style.top = `${event.clientY - 4}px`;
+      document.body.appendChild(trail);
+      trail.addEventListener("animationend", () => trail.remove());
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.animate(
+          [
+            { opacity: 0, transform: "translateY(28px) scale(0.98)" },
+            { opacity: 1, transform: "translateY(0) scale(1)" }
+          ],
+          {
+            duration: 720,
+            easing: "cubic-bezier(0.16, 0.82, 0.28, 1)",
+            fill: "both"
+          }
+        );
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".section, .profile-card, .hero-card").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
